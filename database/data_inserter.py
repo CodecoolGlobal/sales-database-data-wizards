@@ -10,7 +10,7 @@ from data_manager import execute_select, execute_dml_statement
 
 def main():
     init_db.init_db()
-    print("database created!!")
+    print("database created!!!")
 
 
 if __name__ == '__main__':
