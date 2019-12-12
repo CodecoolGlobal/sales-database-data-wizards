@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS address;
 DROP TABLE IF EXISTS customer_representative;
 
-
 CREATE TABLE orders
 (
     order_number INT PRIMARY KEY,
@@ -15,7 +14,6 @@ CREATE TABLE orders
     deal_size    text,
     customer_id  INT  NOT NULL
 );
-
 
 CREATE TABLE product
 (
@@ -49,6 +47,7 @@ ALTER TABLE ONLY product
     ADD CONSTRAINT product_product_category_id__fk
         FOREIGN KEY (product_category_id) REFERENCES product_category (id);
 
+
 CREATE TABLE address
 (
     id             SERIAL PRIMARY KEY,
@@ -71,11 +70,13 @@ CREATE TABLE customer_representative
 
 );
 
+
 ALTER TABLE ONLY customer
     ADD CONSTRAINT customer_customer_representative_id__fk
         FOREIGN KEY (customer_representative_id) REFERENCES customer_representative (id),
     ADD CONSTRAINT customer_address_id__fk
         FOREIGN KEY (address_id) REFERENCES address (id);
+
 
 CREATE TABLE order_details
 (
@@ -92,3 +93,5 @@ ALTER TABLE ONLY order_details
         FOREIGN KEY (order_number) REFERENCES orders (order_number),
     ADD CONSTRAINT order__product_code__fk
         FOREIGN KEY (product_code) REFERENCES product (product_code);
+
+
