@@ -1,3 +1,5 @@
+SET datestyle TO MDY;
+
 DROP TABLE IF EXISTS order_details;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS product_category;
@@ -8,11 +10,12 @@ DROP TABLE IF EXISTS customer_representative;
 
 CREATE TABLE orders
 (
-    order_number INT PRIMARY KEY,
-    order_date   date NOT NULL,
-    status       text NOT NULL,
+    order_id     SERIAL PRIMARY KEY,
+    order_number INT,
+    order_date   timestamp without time zone NOT NULL,
+    status       text                        NOT NULL,
     deal_size    text,
-    customer_id  INT  NOT NULL
+    customer_id  INT                         NOT NULL
 );
 
 CREATE TABLE product
@@ -90,8 +93,6 @@ CREATE TABLE order_details
 
 ALTER TABLE ONLY order_details
     ADD CONSTRAINT order_line__order_number__fk
-        FOREIGN KEY (order_number) REFERENCES orders (order_number),
+        FOREIGN KEY (order_number) REFERENCES orders (order_id),
     ADD CONSTRAINT order__product_code__fk
         FOREIGN KEY (product_code) REFERENCES product (product_code);
-
-

@@ -15,3 +15,11 @@ SELECT DISTINCT customername, cr.id, a.id
 FROM sales_data_sample sds
          JOIN address a on sds.addressline1 = a.address_line_1
          JOIN customer_representative cr on sds.phone = cr.phone;
+
+INSERT INTO orders (order_number, order_date, status, deal_size, customer_id)
+SELECT CAST(ordernumber AS integer), CAST(orderdate AS timestamp without time zone), status, dealsize, c.id
+FROM sales_data_sample sds
+        JOIN customer c ON c.name = sds.customername
+        GROUP BY ordernumber, orderdate, status, dealsize, c.id;
+
+
