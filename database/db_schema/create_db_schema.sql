@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS customer_representative;
 CREATE TABLE orders
 (
     order_id     SERIAL PRIMARY KEY,
-    order_number INT,
+    order_number INTEGER,
     order_date   timestamp without time zone NOT NULL,
     status       text                        NOT NULL,
     deal_size    text,

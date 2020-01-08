@@ -20,6 +20,7 @@ INSERT INTO orders (order_number, order_date, status, deal_size, customer_id)
 SELECT CAST(ordernumber AS integer), CAST(orderdate AS timestamp without time zone), status, dealsize, c.id
 FROM sales_data_sample sds
         JOIN customer c ON c.name = sds.customername
-        GROUP BY ordernumber, orderdate, status, dealsize, c.id;
+        GROUP BY ordernumber, orderdate, dealsize, c.id, status, orderlinenumber
+        ORDER BY ordernumber ASC, orderlinenumber ASC ;
 
 
