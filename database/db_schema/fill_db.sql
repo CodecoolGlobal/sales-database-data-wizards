@@ -2,25 +2,23 @@ INSERT INTO address (territory, country, city, postal_code, address_line_1, addr
 SELECT DISTINCT territory, country, city, postalcode, addressline1, addressline2
 FROM sales_data_sample;
 
-INSERT INTO customer_representative (phone, first_name, last_name)
-SELECT DISTINCT phone, contactfirstname, contactlastname
-FROM sales_data_sample;
-
 INSERT INTO product_category (name)
 SELECT DISTINCT productline
 FROM sales_data_sample;
 
-INSERT INTO customer (name, customer_representative_id, address_id)
-SELECT DISTINCT customername, cr.id, a.id
+INSERT INTO customer (name, address_id)
+SELECT DISTINCT customername, a.id
 FROM sales_data_sample sds
-         JOIN address a on sds.addressline1 = a.address_line_1
-         JOIN customer_representative cr on sds.phone = cr.phone;
+         JOIN address a on sds.addressline1 = a.address_line_1;
 
-INSERT INTO orders (order_number, order_date, status, deal_size, customer_id)
-SELECT CAST(ordernumber AS integer), CAST(orderdate AS timestamp without time zone), status, dealsize, c.id
+INSERT INTO customer_representative (phone, first_name, last_name, customer_id)
+SELECT DISTINCT phone, contactfirstname, contactlastname, c.id
+FROM sales_data_sample
+    JOIN customer c ON customername = name;
+
+INSERT INTO orders (order_number, order_date, status, customer_id)
+SELECT DISTINCT CAST(ordernumber AS integer), CAST(orderdate AS timestamp without time zone), status, c.id
 FROM sales_data_sample sds
-        JOIN customer c ON c.name = sds.customername
-        GROUP BY ordernumber, orderdate, dealsize, c.id, status, orderlinenumber
-        ORDER BY ordernumber ASC, orderlinenumber ASC ;
+        JOIN customer c ON c.name = customername;
 
 
