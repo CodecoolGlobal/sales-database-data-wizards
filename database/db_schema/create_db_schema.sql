@@ -1,10 +1,8 @@
-SET datestyle TO MDY;
-
 DROP TABLE IF EXISTS order_details;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS customer_representative;
+DROP TABLE IF EXISTS customer_representative CASCADE;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS address;
 
@@ -19,16 +17,16 @@ CREATE TABLE orders
 CREATE TABLE product
 (
     product_code        TEXT PRIMARY KEY,
-    product_category_id INT     NOT NULL,
-    msrp                INT     NOT NULL
+    product_category_id INT NOT NULL,
+    msrp                INT NOT NULL
 );
 
 
 CREATE TABLE customer
 (
-    id                         SERIAL PRIMARY KEY,
-    name                       text,
-    address_id                 INT NOT NULL
+    id         SERIAL PRIMARY KEY,
+    name       text,
+    address_id INT NOT NULL
 );
 
 ALTER TABLE ONLY orders
@@ -62,10 +60,10 @@ CREATE TABLE address
 
 CREATE TABLE customer_representative
 (
-    id         SERIAL PRIMARY KEY,
-    first_name text,
-    last_name  text,
-    phone      text NOT NULL,
+    id          SERIAL PRIMARY KEY,
+    first_name  text,
+    last_name   text,
+    phone       text    NOT NULL,
     customer_id INTEGER NOT NULL
 
 );
@@ -82,11 +80,11 @@ ALTER TABLE ONLY customer
 
 CREATE TABLE order_details
 (
-    order_id INT PRIMARY KEY,
-    order_number INT NOT NULL,
-    product_code      TEXT NOT NULL,
-    price_each        INT NOT NULL,
-    quantity          INT NOT NULL,
+    order_id                   INT PRIMARY KEY,
+    order_number               INT  NOT NULL,
+    product_code               TEXT NOT NULL,
+    price_each                 INT  NOT NULL,
+    quantity                   INT  NOT NULL,
     customer_representative_id INT
 );
 
