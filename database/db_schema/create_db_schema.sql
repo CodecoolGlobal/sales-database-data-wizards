@@ -18,8 +18,7 @@ CREATE TABLE orders
 
 CREATE TABLE product
 (
-    product_code        INT PRIMARY KEY,
-    price               DECIMAL NOT NULL,
+    product_code        TEXT PRIMARY KEY,
     product_category_id INT     NOT NULL,
     msrp                INT     NOT NULL
 );
@@ -83,9 +82,9 @@ ALTER TABLE ONLY customer
 
 CREATE TABLE order_details
 (
-    order_line_number INT NOT NULL,
-    order_number      INT NOT NULL,
-    product_code      INT NOT NULL,
+    order_id INT,
+    order_number INT NOT NULL,
+    product_code      TEXT NOT NULL,
     price_each        INT NOT NULL,
     quantity          INT NOT NULL,
     category_id       INT,

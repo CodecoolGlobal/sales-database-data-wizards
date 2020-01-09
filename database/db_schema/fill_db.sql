@@ -1,5 +1,5 @@
-INSERT INTO address (territory, country, city, postal_code, address_line_1, address_line_2)
-SELECT DISTINCT territory, country, city, postalcode, addressline1, addressline2
+INSERT INTO address (territory, country, city, state, postal_code, address_line_1, address_line_2)
+SELECT DISTINCT territory, country, city, state, postalcode, addressline1, addressline2
 FROM sales_data_sample;
 
 INSERT INTO product_category (name)
@@ -21,4 +21,12 @@ SELECT DISTINCT CAST(ordernumber AS integer), CAST(orderdate AS timestamp withou
 FROM sales_data_sample sds
         JOIN customer c ON c.name = customername;
 
+INSERT INTO product (product_code, product_category_id, msrp)
+SELECT DISTINCT productcode, pc.id, msrp FROM sales_data_sample sds
+    JOIN product_category pc ON pc.name = sds.productline;
 
+INSERT INTO order_details (order_id, order_number, product_code, price_each, quantity, category_id, customer_representative_id)
+SELECT CAST(concat(ordernumber, orderlinenumber) AS INTEGER) AS order_id, ordernumber, productcode, priceeach, quantityordered, pc.id, cr.id FROM sales_data_sample sds
+    JOIN product_category pc ON pc.name = sds.productline
+    JOIN product p ON p.product_code = sds.productcode
+    JOIN customer_representative cr ON cr.phone = sds.phone;
