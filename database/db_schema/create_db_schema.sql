@@ -82,12 +82,11 @@ ALTER TABLE ONLY customer
 
 CREATE TABLE order_details
 (
-    order_id INT,
+    order_id INT PRIMARY KEY,
     order_number INT NOT NULL,
     product_code      TEXT NOT NULL,
     price_each        INT NOT NULL,
     quantity          INT NOT NULL,
-    category_id       INT,
     customer_representative_id INT
 );
 

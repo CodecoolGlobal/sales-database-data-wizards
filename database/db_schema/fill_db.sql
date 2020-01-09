@@ -25,8 +25,6 @@ INSERT INTO product (product_code, product_category_id, msrp)
 SELECT DISTINCT productcode, pc.id, msrp FROM sales_data_sample sds
     JOIN product_category pc ON pc.name = sds.productline;
 
-INSERT INTO order_details (order_id, order_number, product_code, price_each, quantity, category_id, customer_representative_id)
-SELECT CAST(concat(ordernumber, orderlinenumber) AS INTEGER) AS order_id, ordernumber, productcode, priceeach, quantityordered, pc.id, cr.id FROM sales_data_sample sds
-    JOIN product_category pc ON pc.name = sds.productline
-    JOIN product p ON p.product_code = sds.productcode
-    JOIN customer_representative cr ON cr.phone = sds.phone;
+INSERT INTO order_details (order_id, order_number, product_code, price_each, quantity, customer_representative_id)
+SELECT CAST(concat(ordernumber, orderlinenumber) AS INTEGER) AS order_id, ordernumber, productcode, priceeach, quantityordered, cr.id FROM sales_data_sample sds
+    JOIN customer_representative cr ON cr.phone = sds.phone AND cr.first_name = sds.contactfirstname AND cr.last_name = sds.contactlastname;
